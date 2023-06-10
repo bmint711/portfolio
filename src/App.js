@@ -5,7 +5,7 @@ function App() {
   return (
     <div>
       <header>
-        <h1>My Portfolio</h1>
+        <h1>Brian Mintah's Coding Portfolio</h1>
         <nav>
           <ul>
             <li><a href="#about">About</a></li>

@@ -50,7 +50,7 @@ function App() {
         </section>
       </main>
       <footer>
-        <p>&copy; My Portfolio 2023</p>
+        <p>&copy; Brian's Portfolio 2023</p>
       </footer>
     </div>
   );

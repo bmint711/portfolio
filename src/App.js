@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
-import { Document, Page } from 'react-pdf';
 import { BrowserRouter as Router, Routes, Route, Link, useParams} from 'react-router-dom';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 import './App.css';
-import project1PDF from './Assignment 1.pdf';
+import projectImage1 from './assignment1.jpg';
+import projectImage2 from './assignment1-2.jpg';
+import projectImage3 from './assignment1code.jpg';
 
 function Home() {
   return (
     <div>
       <h2>Welcome to Brian Mintah's Coding Portfolio</h2>
       <p>Hello! I am a Computer Information Systems major from Wilkes University. I Love to create things and I find joy in learning as it's a way to see the world evolve around you.
-        Here you will see an assortment of projects I have worked on throughout school and in my own time. Just like many projects it is a work in process, so please bear with me!
+        Here you will see an assortment of projects I have worked on throughout school and in my own time. Just like many projects it is a work in process, so please bear with me!!
       </p>
       
       <Projects />
@@ -30,34 +31,35 @@ function Projects() {
     <section>
       <h2>Projects</h2>
       <ul>
-        <li><Link to="/projects/project1">Project 1</Link></li>
-        <li><Link to="/projects/project2">Project 2</Link></li>
-        <li><Link to="/projects/project3">Project 3</Link></li>
+        <li><Link to="/portfolio/projects/project1">Data pipeline project (inprogess)</Link></li>
+        <li><Link to="/portfolio/projects/project2">Testing project (inprogress)</Link></li>
       </ul>
       <Routes>
-        <Route path="/projects/project1" element={<Project1Details />} />
+        <Route path="/portfolio/projects/project1" element={<Pastdataproj />} />
       </Routes>
     </section>
   );
 }
+function InprogressProjects(){
 
-function Project1Details() {
-  const [numPages, setNumPages] = useState(null);
+}
 
-  const onDocumentLoadSuccess = ({ numPages }) => {
-    setNumPages(numPages);
-  };
+
+//past projects
+function Pastdataproj() {
+  
   return (
     <div>
-      <h2>Project 1 Details</h2>
-      <Document file={project1PDF} onLoadSuccess={onDocumentLoadSuccess}>
-        {Array.from(new Array(numPages), (el, index) => (
-          <Page key={`page_${index + 1}`} pageNumber={index + 1} />
-        ))}
-      </Document>
+      <h3>Project 1 Details</h3>
+      <p>Here is a collection of photos that display my first data analysis project ever, the first being a tuberculosis analysis. </p>
+      <div className='container'>
+      <img src={projectImage1} alt="Project 1" style={{width: '1000px'}}/>
+      <img src={projectImage2} alt="Project part 2" style={{width: '1000px'}}/>
+      <img src={projectImage3} alt="Project part 3" style={{width: '1000px'}}/>
+      </div>
     </div>
   );
-}
+  };
 
 
 
@@ -95,12 +97,16 @@ function PastProjects() {
         <li><Link to="/past-projects/project-comp-1">Project Comp 1</Link></li>
         <li><Link to="/past-projects/project-comp-2">Project Comp 2</Link></li>
       </ul>
+      <Routes>
+        <Route path="/past-projects/project-comp-1" element={<Pastdataproj />} />
+      </Routes>
     </section>
   );
 }
 
 
 function App() {
+
   return (
     <Router>
       <div>
@@ -119,10 +125,10 @@ function App() {
         </header>
         <main>
           <Routes>
-            <Route path="/portfolio" element={<Home />} />
-            <Route path="/portfolio/projects" element={<Projects />} />
+            <Route path="/portfolio/*" element={<Home />} />
+            <Route path="/portfolio/projects/project1" element={<InprogressProjects />} />
             <Route path="/portfolio/certifications" element={<Certifications />} />
-            <Route path="/portfolio/past-projects" element={<PastProjects />} />
+            <Route path="/past-projects/project-comp-1" element={<Pastdataproj />} />
             <Route path="/portfolio/contact" element={<Contact />} />
           </Routes>
         </main>
@@ -134,10 +140,8 @@ function App() {
   );
 }
 
-
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
+const domNode = document.getElementById('root');
+const root = createRoot(domNode);
+root.render(<App />);
 
 export default App;

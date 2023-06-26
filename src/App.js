@@ -5,6 +5,9 @@ import './App.css';
 import projectImage1 from './assignment1.jpg';
 import projectImage2 from './assignment1-2.jpg';
 import projectImage3 from './assignment1code.jpg';
+import databaseImage from './database1.jpg';
+import databaseImage2 from './database2.jpg';
+import databaseImage3 from './database3.jpg';
 
 function Home() {
   return (
@@ -41,6 +44,17 @@ function Projects() {
   );
 }
 function InprogressProjects(){
+  return (
+    <div>
+      <h3>Database pipeline progress</h3>
+      <p>Pictures of the databases I plan on using. </p>
+      <div className='container'>
+      <img src={databaseImage} alt="data 1" style={{width: '1000px'}}/>
+      <img src={databaseImage2} alt="data part 2" style={{width: '1000px'}}/>
+      <img src={databaseImage3} alt="data part 3" style={{width: '1000px'}}/>
+      </div>
+    </div>
+  );
 
 }
 

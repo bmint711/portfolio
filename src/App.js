@@ -1,13 +1,9 @@
-import { BrowserRouter as Router, Routes, Route, Link, useParams} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import './App.css';
-import projectImage1 from './assignment1.jpg';
-import projectImage2 from './assignment1-2.jpg';
-import projectImage3 from './assignment1code.jpg';
-import databaseImage from './database1.jpg';
-import databaseImage2 from './database2.jpg';
-import databaseImage3 from './database3.jpg';
+import { useForm, ValidationError } from '@formspree/react';
+import { projectImage1, projectImage2, projectImage3, databaseImage, databaseImage2, databaseImage3, certificateimage, pipeImage } from './imageImports';
 
 function Home() {
   return (
@@ -35,7 +31,6 @@ function Projects() {
       <h2>Projects</h2>
       <ul>
         <li><Link to="/portfolio/projects/project1">Data pipeline project (inprogess)</Link></li>
-        <li><Link to="/portfolio/projects/project2">Testing project (inprogress)</Link></li>
       </ul>
       <Routes>
         <Route path="/portfolio/projects/project1" element={<Pastdataproj />} />
@@ -43,15 +38,20 @@ function Projects() {
     </section>
   );
 }
+
+//PIPELINE 
 function InprogressProjects(){
   return (
     <div>
       <h3>Database pipeline progress</h3>
-      <p>Pictures of the databases I plan on using. </p>
+      <p>Pictures of the databases I plan on using along with the code working with. The plan is to build a data pipeline that ingests, processes, and stores brain scan image data from different sources.
+         I plan on Using Apache Kafka, Apache Spark, MySQL, AWS Glue and matplotlib to build a robust pipeline
+        that handles data ingestion, transformation, and storage in a data warehouse.</p>
       <div className='container'>
       <img src={databaseImage} alt="data 1" style={{width: '1000px'}}/>
       <img src={databaseImage2} alt="data part 2" style={{width: '1000px'}}/>
       <img src={databaseImage3} alt="data part 3" style={{width: '1000px'}}/>
+      <img src={pipeImage} alt="pipeline code" style={{width: '1000px'}}/>
       </div>
     </div>
   );
@@ -80,9 +80,48 @@ function Pastdataproj() {
 function Certifications() {
   return (
     <section>
-      <h2>Certifications</h2>
-      {/* Add certification content here */}
+      <h2>Certificates</h2>
+      <ul>
+        <li><Link to="/portfolio/certifications">Certification compilation</Link></li>
+      </ul>
+      <Routes>
+        <Route path="/portfolio/projects/project1" element={<CertificationsContent />} />
+      </Routes>
     </section>
+  );
+}
+
+function CertificationsContent(){
+  return (
+    <div>
+      <h3>Certificates</h3>
+      <p>Certificate from Codecademy for learning how to write unit tests with Mocha.</p>
+      <div className='container'>
+      <img src={certificateimage} alt="testing certificate" style={{width: '1000px'}}/>
+      </div>
+    </div>
+  );
+}
+function ContactForm() {
+  const [state, handleSubmit] = useForm("mjvqbenb");
+
+  if (state.succeeded) {
+    return <p>Thanks for joining!</p>;
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="email">Your Email Address</label>
+      <input id="email" type="email" name="email" />
+      <ValidationError prefix="Email" field="email" errors={state.errors} />
+      <label htmlFor="email">Subject</label>
+      <textarea id="message" name="message" />
+      <ValidationError prefix="Message" field="message" errors={state.errors} />
+
+      <button type="submit" disabled={state.submitting}>
+        Submit
+      </button>
+    </form>
   );
 }
 
@@ -90,15 +129,7 @@ function Contact() {
   return (
     <section>
       <h2>Contact</h2>
-      <form action="#" method="post">
-        <label htmlFor="name">Name:</label>
-        <input type="text" id="name" name="name" required />
-        <label htmlFor="email">Email:</label>
-        <input type="email" id="email" name="email" required />
-        <label htmlFor="message">Message:</label>
-        <textarea id="message" name="message" required></textarea>
-        <button type="submit">Send</button>
-      </form>
+      <ContactForm />
     </section>
   );
 }
@@ -108,8 +139,7 @@ function PastProjects() {
     <section>
       <h2>Past Projects</h2>
       <ul>
-        <li><Link to="/past-projects/project-comp-1">Project Comp 1</Link></li>
-        <li><Link to="/past-projects/project-comp-2">Project Comp 2</Link></li>
+        <li><Link to="/past-projects/project-comp-1">Project Compilation</Link></li>
       </ul>
       <Routes>
         <Route path="/past-projects/project-comp-1" element={<Pastdataproj />} />
@@ -129,11 +159,10 @@ function App() {
           <nav>
             <ul>
               <li><Link to="/portfolio">Home</Link></li>
-              <li><Link to="/portfolio/projects">Projects</Link></li>
+              <li><Link to="/portfolio/projects/project1">Projects</Link></li>
               <li><Link to="/portfolio/certifications">Certifications</Link></li>
-              <li><Link to="/portfolio/past-projects">Past Projects</Link></li>
+              <li><Link to="/past-projects/project-comp-1">Past Projects</Link></li>
               <li><Link to="/portfolio/contact">Contact</Link></li>
-              <li><Link to="/portfolio/about">About</Link></li>
             </ul>
           </nav>
         </header>
@@ -141,7 +170,7 @@ function App() {
           <Routes>
             <Route path="/portfolio/*" element={<Home />} />
             <Route path="/portfolio/projects/project1" element={<InprogressProjects />} />
-            <Route path="/portfolio/certifications" element={<Certifications />} />
+            <Route path="/portfolio/certifications" element={<CertificationsContent />} />
             <Route path="/past-projects/project-comp-1" element={<Pastdataproj />} />
             <Route path="/portfolio/contact" element={<Contact />} />
           </Routes>
@@ -153,6 +182,7 @@ function App() {
     </Router>
   );
 }
+
 
 const domNode = document.getElementById('root');
 const root = createRoot(domNode);
